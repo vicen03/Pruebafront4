@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Publicación</title>
+  <script src="jquery-3.7.1.min.js"></script>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: Arial;
+      padding: 20px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .error {
+      border-color: red;
+      background-color: #330000;
+    }
+
+    .mensaje-error {
+      color: red;
+      font-size: 0.9em;
+      margin-top: -8px;
+      margin-bottom: 8px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" style="color:white;">Inicio</a> |
+    <a href="creacionUsuario.html" style="color:white;">Crear Usuario</a> |
+    <a href="crearpublicacion.html" style="color:white;">Crear Publicación</a>
+  </nav>
+
+  <h1>Formulario Crear Publicación</h1>
+
+  <form id="formPost" novalidate>
+    <label>Título *</label>
+    <input type="text" id="titulo">
+    <div class="mensaje-error" id="errorTitulo"></div>
+
+    <label>Contenido *</label>
+    <textarea id="contenido" rows="5"></textarea>
+    <div class="mensaje-error" id="errorContenido"></div>
+
+    <label>ID de Usuario *</label>
+    <input type="number" id="userId" min="1">
+    <div class="mensaje-error" id="errorUserId"></div>
+
+    <button type="button" id="btnCancelar">Cancelar</button>
+    <button type="button" id="btnGuardar">Guardar</button>
+  </form>
+
+  <script>
+    function limpiarErrores() {
+      $('.mensaje-error').text('');
+      $('input, textarea').removeClass('error');
+    }
+
+    function validarFormulario() {
+      limpiarErrores();
+      let valido = true;
+
+      const titulo = $('#titulo').val().trim();
+      const contenido = $('#contenido').val().trim();
+      const userId = $('#userId').val().trim();
+
+      if (titulo === '') {
+        $('#errorTitulo').text('El título es obligatorio.');
+        $('#titulo').addClass('error');
+        valido = false;
+      }
+
+      if (contenido === '') {
+        $('#errorContenido').text('El contenido es obligatorio.');
+        $('#contenido').addClass('error');
+        valido = false;
+      }
+
+      if (userId === '' || isNaN(userId) || Number(userId) < 1) {
+        $('#errorUserId').text('ID de usuario inválido.');
+        $('#userId').addClass('error');
+        valido = false;
+      }
+
+      return valido;
+    }
+
+    $('#btnCancelar').click(function () {
+      $('#formPost')[0].reset();
+      limpiarErrores();});
+      
+    $('#btnGuardar').click(function () {
+      if (validarFormulario()) { alert('¡Publicación creada correctamente! (simulado)'); }});
+  </script>
+
+</body>
+</html>
